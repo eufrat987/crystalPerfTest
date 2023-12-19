@@ -39,6 +39,21 @@ def n_search(arr):
     return -1
 
 def nsqr_search(arr):
+    s = len(arr)
+    jump = math.floor(math.sqrt(s));
+
+    p = -1;
+    lp = -1;
+    for i in range(0, s, jump):
+        if arr[i] == 0:
+            lp = p
+            p = i
+        elif arr[i] == 1: 
+            break
+
+    for i in range(lp, p):
+        if arr[i] == 0: return i
+
     return -1
 
 
