@@ -3,7 +3,7 @@ import statistics
 import math
 
 def meaure():
-    sizes = [10, 100, 1000, 10000, 100000]
+    sizes = [100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000]
 
     for s in sizes:
         nr = []
@@ -11,10 +11,10 @@ def meaure():
         phn = []
         print(s)
         progress = 0
-        for br in range(1, s):
-            if 100*float(br)/s >= progress + 1: 
-                progress += 1
-                print(str(progress) + '%')
+        for br in range(1, s, int(s/100)): # ~100 cases/points
+            # if 100*float(br)/s >= progress + 1: 
+            #     progress += 1
+                # print(str(progress) + '%')
             arr = genArr(s, br);
             time(n_search, arr, nr, br)
             time(pshalf_search, arr, phn, br)
