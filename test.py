@@ -14,13 +14,12 @@ def meaure():
         for br in range(1, s):
             if 100*float(br)/s >= progress + 1: 
                 progress += 1
-                print(str(progress) + '%', end=' ')
+                print(str(progress) + '%')
             arr = genArr(s, br);
             time(n_search, arr, nr, br)
             time(pshalf_search, arr, phn, br)
             time(nsqr_search, arr, sqn, br)
         
-        print()
         print('n', statistics.mean(nr))
         print('phn', statistics.mean(phn))
         print('sqn', statistics.mean(sqn))
