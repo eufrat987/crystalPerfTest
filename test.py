@@ -3,23 +3,28 @@ import statistics
 import math
 
 def meaure():
-    sizes = [10, 100, 1000, 10000]
-
-    nr = []
-    sqn = []
-    phn = []
+    sizes = [10, 100, 1000, 10000, 100000]
 
     for s in sizes:
+        nr = []
+        sqn = []
+        phn = []
         print(s)
+        progress = 0
         for br in range(1, s):
+            if 100*float(br)/s >= progress + 1: 
+                progress += 1
+                print(str(progress) + '%', end=' ')
             arr = genArr(s, br);
             time(n_search, arr, nr, br)
-            time(nsqr_search, arr, sqn, br)
             time(pshalf_search, arr, phn, br)
+            time(nsqr_search, arr, sqn, br)
+        
+        print()
+        print('n', statistics.mean(nr))
+        print('phn', statistics.mean(phn))
+        print('sqn', statistics.mean(sqn))
 
-    print('n', statistics.mean(nr))
-    print('sn', statistics.mean(sqn))
-    print('pn', statistics.mean(phn))
 
 def time(alg, arr, res, expected):
     now = timer()
@@ -45,19 +50,22 @@ def nsqr_search(arr):
     s = len(arr)
     jump = math.floor(math.sqrt(s));
 
-    p = 0;
+    p = 0
+    f = False
     for i in range(0, s, jump):
         p = i
-        print('i', i)
-        if arr[i] == 1: 
+        if arr[i] == 1:
+            f = True 
             break
 
-    for i in range(p-jump, p+1):
-        print('ii', i, p)
-        if arr[i] == 1: 
-            print('res', i)
-            return i
-
+    if f:
+        for i in range(p-jump, p+1):
+            if arr[i] == 1: 
+                return i
+    else:
+        for i in range(p, s):
+            if arr[i] == 1: 
+                return i
     return -1
 
 
@@ -65,7 +73,7 @@ def pshalf_help(arr, lo, hi):
     m = math.floor(lo + (hi - lo) / 2)
 
     if arr[m] == 0:
-        return pshalf_search(arr, m, hi)
+        return pshalf_help(arr, m, hi)
     
     for i in range(lo, hi):
         if arr[i] == 1: return i
